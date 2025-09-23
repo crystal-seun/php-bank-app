@@ -53,7 +53,11 @@
             <label class="text-dark" for="">Address</label>
             <textarea class="form-control" name="" id="" cols="30" rows="10"></textarea>
         </div>
-        <div class="my-3">
+        <div class="form-group">
+    <label class="text-dark" for="">Role</label>
+    <input name="role" class="form-control" type="text" placeholder="Enter admin or user">
+    </div>
+   <div class="my-3">
             <button class="btn btn-dark w-100">Register</button>
         </div>
     </form>
