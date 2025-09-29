@@ -13,12 +13,23 @@
 </head>
 
 <body>
-    <?php include "components/navbar.html" ?>
+    <?php include "db.php" ?>
     <form class="w-50 m-auto mt-4 p-3 rounded shadow" action="auth/processForm.php" method="post">
         <?php
         if (isset($_GET['anything'])) {
             echo "<div class='alert alert-danger'>$_GET[anything]</div>";
         }
+        
+        // $email = mysqli_real_escape_string($conn, $_POST['email']);
+
+        // $check = mysqli_query($conn, "SELECT id FROM users WHERE email='$email'");
+        // if (mysqli_num_rows($check) > 0) {
+        // displayError("Email already exists");
+
+        // }
+
+
+
         ?>
         <h2>Register User</h2>
         <div class="form-group">

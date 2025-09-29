@@ -1,7 +1,25 @@
 <?php
 session_start();
 $user = $_SESSION['userDetails'];
-print_r($user);
+// print_r($user);
+
+$database = mysqli_connect("localhost", "root", "root", "bank-app");
+
+if ($database) {
+    echo "Connected";
+} else {
+    echo "Not connected";
+    displayError("Database not connected");
+}
+
+
+$query = "SELECT email, password, first_name, last_name FROM users";
+$response = mysqli_query($database, $query);
+
+if ($response) {
+    $db_users = mysqli_fetch_all($response, MYSQLI_ASSOC);
+    print_r($db_users);
+}
 
 function displayError($message)
 {
@@ -26,35 +44,12 @@ if (isset($_POST['login'])) {
     header("Location: dashboard.php");
 }
 
-// bin2hex => Converts strings to hexadecimal format
-// hex2bin
-// time
-// random_byte ..... create a token
-
 $text = "This is php class";
 $text2 = "My users token";
 echo bin2hex($text) . "<br/>";
 echo hex2bin("546869732069732070687020636c617373") . "<br/>";
 echo random_bytes(16) . "<br/>";
 
-
-
-
-
-
-
-// password_verify
-// save all the info inside the processForm.php inside an array
-// Save the array in the session
-// create a login form (Fields => email and password)
-// Validate your input field
-// Ensure the email provided by the user matches with the email in the session
-// Ensure the password provided by the user matches with the password in the session using PASSWORD_VERIFY
-// If the information does not match Echo => User credentials not correct
-// Else =>
-// Navigate to your dashboard.php Displaying 'WELCOME TO YOUR DASHBOARD ---- FIRST NAME concatinate with LAST NAME'.....
-// SQL....
-// Authentication
 ?>
 
 
@@ -87,6 +82,9 @@ echo random_bytes(16) . "<br/>";
         </div>
         <div class="my-3">
             <button name="login" class="btn btn-dark w-100">Login</button>
+        </div>
+        <div>
+            <p>Don't have an account? <a href="register.php">Register</a></p>
         </div>
     </form>
 </body>
