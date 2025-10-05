@@ -41,37 +41,3 @@ if ($db_user['role'] !== "admin") {
 </body>
 
 </html>
-
-
-<!-- 
-Create a new folder names myProducts
-It is going to have a form for creating a product 
-FORM FIELDS
-    Product name
-    Product price
-    Product category
-    Product image => Image url (https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg)
-    Product description
-    Product Quantity
-
-Create a new database with a name => my_store
-It will have table of products
-
-From the form page, go to all product page where it will display all of the product in your database
-Include 
-    See more button
-    Add to cart button 
-        => On each of the product
-
-create another table in your (myProducts) database called carts
-When you click on the add to cart button
-It takes the products to the cart table
-
-Create a navbar that will have
-    Add product => Take you to the form where you can add new product
-    All Product => Take you to the page where you can view all products added
-    Cart => cart.php A page that displays products added to the cart table
-
-Create a new github repopsitory
-Submit the assigment with the repository link
- -->
