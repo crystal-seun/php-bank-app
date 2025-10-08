@@ -1,0 +1,18 @@
+{
+    "name": "user/php-bank-app",
+    "autoload": {
+        "psr-4": {
+            "User\\PhpBankApp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "crystal-seun",
+            "email": "oluwaseunafere1@gmail.com"
+        }
+    ],
+    "require": {
+        "nesbot/carbon": "^3.10",
+        "cloudinary/cloudinary_php": "^3.1"
+    }
+}

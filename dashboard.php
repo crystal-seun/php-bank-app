@@ -29,6 +29,7 @@ if (isset($_GET['logout'])) {
 </head>
 
 <body>
+     <?php include "components/navbar.html" ?>
     <form action="dashboard.php" method="get">
         <button name="logout">Logout</button>
     </form>
