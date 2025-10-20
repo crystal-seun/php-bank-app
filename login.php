@@ -3,7 +3,7 @@ session_start();
 $user = $_SESSION['userDetails'];
 // print_r($user);
 
-$database = mysqli_connect("localhost", "root", "root", "bank-app");
+$database = mysqli_connect("localhost", "root", "", "bank_app");
 
 if ($database) {
     echo "Connected";

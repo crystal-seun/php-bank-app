@@ -16,10 +16,11 @@
     <?php include "components/navbar.html" ?>
     <div class="card w-25 mt-4 shadow mx-auto">
         <img src="images/Sample_User_Icon.png" alt="">
-        <form action="profile.php">
-            <input name="profile-pix" type="file">
-            <button>Change Profile Pics</button>
-        </form>
+       <form action="fileupload.php" method="POST" enctype="multipart/form-data" class="p-3">
+    <input name="profile-pix" type="file" accept="image/*" required class="form-control mb-2">
+    <button type="submit" class="btn btn-primary w-100">Change Profile Picture</button>
+</form>
+
         <div>
             <h1>Name: User name</h1>
             <h1>Email: User email</h1>

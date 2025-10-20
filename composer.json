@@ -13,6 +13,7 @@
     ],
     "require": {
         "nesbot/carbon": "^3.10",
-        "cloudinary/cloudinary_php": "^3.1"
+        "cloudinary/cloudinary_php": "^3.1",
+        "vlucas/phpdotenv": "^5.6"
     }
 }

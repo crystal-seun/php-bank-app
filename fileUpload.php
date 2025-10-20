@@ -1,47 +1,44 @@
 <?php
-if (isset($_POST['upload'])) {
-    // Select a directory/folder where you want to save the image
-    $target_folder = "images/";
-    // Select the file and create a path for reference
-    $image_path = $target_folder . basename($_FILES["picture"]["name"]);
+require 'vendor/autoload.php';
 
-    if (move_uploaded_file($_FILES["picture"]["tmp_name"], $image_path)) {
-        echo "Uploaded";
-    } else {
-        echo "Something went wrong";
+use Cloudinary\Cloudinary;
+
+session_start();
+if (!isset($_SESSION['userDetails'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$email = $_SESSION['userDetails']['email'];
+
+$database = mysqli_connect("localhost", "root", "", "bank_app");
+if ($database) {
+    echo "Connected";
+} else {
+    echo "Not connected";
+    displayError("Database not connected");
+}
+
+
+$cloudinary = new Cloudinary([
+    'cloud' => [
+        'cloud_name' => 'dtnc3zhwf',
+        'api_key'    => '421259134835321',
+        'api_secret' => 'vlKwfr1eXqMLxUHz6hnSwL4bfrc'
+    ],
+]);
+
+if (isset($_POST['upload'])) {
+    $file = $_FILES['image'];
+    print_r($file);
+    try{
+        $result = $cloudinary->uploadApi()->upload($file['tmp_name']);
+        if($result){
+            echo "<img src='$result[secure_url]' />";
+        }
+    } catch (\Exception $th) {
+        echo $th->getMessage() . "something went wrong";
     }
 }
 
-if (isset($_POST['upload'])) {
-    // $uploaded_img = $_FILES("image"),
-
-}
-
-// cloudinary => Open a cloudinary account
-// composer
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <main>
-        <form action="fileUpload.php" method="post" enctype="multipart/form-data">
-            <h1>Select a picture</h1>
-            <input name="picture" type="file">
-            <button name="upload">Upload Picture</button>
-        </form>
-    </main>
-    <img src="<?php if ($image_path) {
-                    echo $image_path;
-                } ?>" alt="">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLat8bZvhXD3ChSXyzGsFVh6qgplm1KhYPKA&s" alt="">
-    <img src="images/images.jpg" alt="">
-</body>
-
-</html>
