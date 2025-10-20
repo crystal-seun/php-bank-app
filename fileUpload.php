@@ -20,13 +20,11 @@ if ($database) {
 }
 
 
-$cloudinary = new Cloudinary([
-    'cloud' => [
-        'cloud_name' => 'dtnc3zhwf',
-        'api_key'    => '421259134835321',
-        'api_secret' => 'vlKwfr1eXqMLxUHz6hnSwL4bfrc'
-    ],
-]);
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$cloudinary = new Cloudinary($_ENV["CLOUDINARY_URL"]);
+
 
 if (isset($_POST['upload'])) {
     $file = $_FILES['image'];
