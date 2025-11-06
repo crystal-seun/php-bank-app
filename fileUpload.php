@@ -11,7 +11,7 @@ if (!isset($_SESSION['userDetails'])) {
 
 $email = $_SESSION['userDetails']['email'];
 
-$database = mysqli_connect("localhost", "root", "", "bank_app");
+$database = mysqli_connect("localhost", "root", " ", "bank_app");
 if ($database) {
     echo "Connected";
 } else {
@@ -22,7 +22,7 @@ if ($database) {
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-
+                
 $cloudinary = new Cloudinary($_ENV["CLOUDINARY_URL"]);
 
 

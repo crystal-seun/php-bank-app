@@ -34,7 +34,7 @@ if (isset($_GET['logout'])) {
         <button name="logout">Logout</button>
     </form>
     <div>
-        <h1>Welcome to your dashboard <?php echo "$user[fn] $user[ln]" ?></h1>
+        <h1>Welcome to your dashboard</h1>
     </div>
 </body>
 

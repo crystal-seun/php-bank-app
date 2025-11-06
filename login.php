@@ -1,9 +1,16 @@
 <?php
 session_start();
-$user = $_SESSION['userDetails'];
-// print_r($user);
-
-$database = mysqli_connect("localhost", "root", "", "bank_app");
+$user = $_SESSION['userDetails'] ?? null;
+if ($user){
+    print_r($user);
+}
+function displayError($message)
+{
+    header("Location: login.php?error=$message");
+    exit();
+}
+// $database = mysqli_connect("localhost", "root", "root", "bank-app");
+include "database/database.php";
 
 if ($database) {
     echo "Connected";
@@ -12,44 +19,48 @@ if ($database) {
     displayError("Database not connected");
 }
 
+// A QUERY TO FERTCH ALL USERS
+// $query = "SELECT * FROM users";
+// $query = "SELECT email, password, first_name, last_name, role FROM users";
+// $response = mysqli_query($database, $query);
+// if ($response) {
+//     $db_users = mysqli_fetch_all($response, MYSQLI_ASSOC);
+//     print_r($db_users);
+// }
 
-$query = "SELECT email, password, first_name, last_name FROM users";
-$response = mysqli_query($database, $query);
-
-if ($response) {
-    $db_users = mysqli_fetch_all($response, MYSQLI_ASSOC);
-    print_r($db_users);
-}
-
-function displayError($message)
-{
-    header("Location: login.php?error=$message");
-    exit();
-}
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    if ($email !== $user['email']) {
-        displayError("User email not correct");
-    }
-    if (!password_verify($password, $user['password'])) {
-        displayError("User password not correct");
-    }
+    //------------ A QUERY TO GET A SINGLE USER -------------
+    try {
+        $query = "SELECT email, password, role FROM users WHERE email='$email'";
+        $response = mysqli_query($database, $query);
+        //code...
+        $db_user = mysqli_fetch_assoc($response); // get just one information i your database []
 
-    $token = bin2hex(random_bytes(16));
-    $token_exp = time() + 30;
-    $loggedInUser = ["fn" => $user['fn'], "ln" => $user['ln'], "token" => $token, "token_exp" => $token_exp];
-    $_SESSION['loggenIn'] = $loggedInUser;
-    header("Location: dashboard.php");
+        print_r($db_user);
+
+        if ($email !==  $db_user['email']) {
+            echo "Incorrect email";
+            // return;
+        }
+        if (!password_verify($password, $db_user['password'])) {
+            displayError("Password not correct");
+        }
+        $token = bin2hex(random_bytes(16));
+        $token_exp = time() + (60 * 5); // Token expires in 5minutes
+        $loggedInUser = ["email" => $db_user['email'], "token" => $token, "token_exp" => $token_exp];
+        $_SESSION['loggenIn'] = $loggedInUser;
+        if ($db_user['role'] !== "admin") {
+            header("Location: dashboard.php");
+            exit;
+        }
+        header("Location: admin/allUsers.php");
+    } catch (\Exception $th) {
+        echo "Something went wrong" . $th->getMessage();
+    }
 }
-
-$text = "This is php class";
-$text2 = "My users token";
-echo bin2hex($text) . "<br/>";
-echo hex2bin("546869732069732070687020636c617373") . "<br/>";
-echo random_bytes(16) . "<br/>";
-
 ?>
 
 

@@ -1,5 +1,14 @@
 <?php
+session_start();
+include "database/database.php";
+include "auth/loggedInUser.php";
+$auth_user = $_SESSION["loggenIn"];
+$email = $auth_user['email'];
 
+$query = "SELECT * FROM users WHERE email='$email'";
+$resp = mysqli_query($database, $query);
+$user = mysqli_fetch_assoc($resp);
+print_r($user);
 ?>
 
 <!DOCTYPE html>
@@ -14,16 +23,19 @@
 
 <body>
     <?php include "components/navbar.html" ?>
-    <div class="card w-25 mt-4 shadow mx-auto">
-        <img src="images/Sample_User_Icon.png" alt="">
-       <form action="fileupload.php" method="POST" enctype="multipart/form-data" class="p-3">
-    <input name="profile-pix" type="file" accept="image/*" required class="form-control mb-2">
-    <button type="submit" class="btn btn-primary w-100">Change Profile Picture</button>
-</form>
-
+    <div class="card w-50 mt-4 shadow mx-auto">
+        <img width="180" src="images/Sample_User_Icon.png" alt="">
+        <form action="profile.php">
+            <input name="profile-pix" type="file">
+            <button>Change Profile Pix</button>
+        </form>
         <div>
-            <h1>Name: User name</h1>
-            <h1>Email: User email</h1>
+            <h1>Name:<?php echo "$user[first_name] $user[last_name]" ?></h1>
+            <h1>Email: <?php echo $user['email'] ?></h1>
+            <h1>Account No: <?php echo $user['account_number'] ?></h1>
+            <!-- toLocaleString() -->
+            <h1>Wallet Balance: ₦<?php echo $user['amount'] ?></h1>
+
         </div>
     </div>
 </body>

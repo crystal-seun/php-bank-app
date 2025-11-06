@@ -6,7 +6,7 @@ if (!$loggedInUser['token'] || time() > $loggedInUser['token_exp']) {
     exit;
 }
 $email = $loggedInUser['email'];
-$database = mysqli_connect("localhost", "root", "root", "bank-app");
+$database = mysqli_connect("localhost", "root", "", "bank_app");
 if (!$database) {
     echo "Database not connecting";
 }
